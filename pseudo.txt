@@ -1,0 +1,82 @@
+class
+  constructor
+    this.id = datenow()
+    this.title = string
+    this.tasks = {}
+    this.urgent = boolean
+  (methods)
+    saveToStorage()
+      stringify global array of todos
+      send to local storage
+    deleteFromStorage(e.target.object)
+      take a argument on an index in the local arrays
+      splice the index out
+      resave to local storage
+      saveToStorage()
+    updateToDo(e.target.object)
+      pass argument of event.target
+      write conditional based on target of title
+        if target is truthy, change target.innerText to e.target. new innerText
+      write conditional based on target of urgency
+        if target is truthy, change e.target.property to !
+      saveToStorage()
+    updateTask(e.target.object, object.tasks.object)
+      pass arguments
+      write conditional based on target
+        if target is truthy, change this.tasks.obj.content = e.target.new innerText
+      write conditional based on target of specific task
+        if target is complete icon, this.tasks.complete = !
+      saveToStorage()
+
+
+
+
+
+
+
+main.js
+
+onload()
+  disable applicable bottons;
+  parse local storage back to global array || [];
+  reinstantiate todos;
+  append todos to DOM;
+
+todoarea.eventlistener(onclick, umbrellaFunctionForButtons);
+
+umbrellaFunctionForButtons(e) {
+  const click = e.target;
+  const card = click.closest('classname');
+  getIndex(card);
+  conditional for each target
+    if click.classname === deletebutton class {
+      deleteCard(click);
+    }
+    if click.classname === urgentbutton class
+    if click.classname === completebutton class
+}
+    
+updatetask() on the DOM
+  find id of e.target
+  use array.findindex to return object
+  iterate through object.tasks to find match with innerText
+  create variable for that object.tasks.object
+  run object.updatetasks(object.tasks.object);
+
+
+function deleteCard(click) {
+  delete card from DOM;
+    getIndex(click);
+}
+
+getIndex(card) {
+  const cardID = card.dataset.id;
+    return
+}
+
+
+
+appendtodos() {
+  const cardtext = `HTML5`;
+  insert.adjacentHTML(afterbegin, cardtext);
+}
