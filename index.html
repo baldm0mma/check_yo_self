@@ -12,7 +12,7 @@
   </head>
     <body>
       <header>
-        <h1 class="header__title">CHECK <span class="header__title--mid">YO'</span>SELF</h1>
+        <h1 class="header__title">CHECK <span class="header__title--mid">YO'</span> SELF</h1>
         <form class="header__form">
           <img class="header__form__search--button" src="images/search.svg">
           <input type="text" placeholder="Search" class="header__form__search--input global--input">
@@ -23,7 +23,8 @@
           <form class="sidebar__form">
             <label class="sidebar__form__todo--title">Task Title</label>
             <input type="text" class="sidebar__form__todo--input global--input" >
-            <ul class="sidebar__form--list-items"></ul>
+            <ul class="sidebar__form--list-items">
+            </ul>
             <label class="sidebar__form__todo--item">Task Item</label>
             <div class="sidebar__form__todo--item--container">
               <input type="text" class="sidebar__form__todo--item--input global--input">
@@ -38,44 +39,22 @@
           <button class="sidebar__form__urgency--button global--button">Filter by Urgency</button>
         </aside>
         <section class="card-zone">
-
-          <div class="card-zone__task-card">
-            <h3 class="card-zone__task-card__title">Task Title!</h3>
-            <div class="card-zone__task-card__items">
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
+          <template class="card-zone__template">
+            <div class="card-zone__task-card">
+              <h3 class="card-zone__task-card__title">Task Title!</h3>
+              <div class="card-zone__task-card__items">
+                <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
+                <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
+                <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
+                <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
+                <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
+              </div>
+              <div class="card-zone__task-card__footer">
+                <img class="card-zone__task-card__footer--urgency-button">
+                <img class="card-zone__task-card__footer--delete-button">
+              </div>
             </div>
-            <div class="card-zone__task-card__footer">
-              <img class="card-zone__task-card__footer--urgency-button">
-              <img class="card-zone__task-card__footer--delete-button">
-            </div>
-          </div>
-
-          <div class="card-zone__task-card">
-            <h3 class="card-zone__task-card__title">Task Title!</h3>
-            <div class="card-zone__task-card__items">
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-            </div>
-            <div class="card-zone__task-card__footer">
-              <img class="card-zone__task-card__footer--urgency-button">
-              <img class="card-zone__task-card__footer--delete-button">
-            </div>
-          </div>
-
-          <div class="card-zone__task-card">
-            <h3 class="card-zone__task-card__title">Task Title!</h3>
-            <div class="card-zone__task-card__items">
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-              <input type="checkbox" class="card-zone__task-card__items--checkbox"><br>
-            </div>
-            <div class="card-zone__task-card__footer">
-              <img class="card-zone__task-card__footer--urgency-button">
-              <img class="card-zone__task-card__footer--delete-button">
-            </div>
-          </div>
+          </template>
         </section>
       </main>
     <script src="todo_list.js"></script>
