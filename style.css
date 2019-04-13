@@ -1,0 +1,229 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.global--input {
+  outline: none;
+  border: black 1px solid;
+  border-radius: 3px;
+  height: 40px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  padding-left: 9px;
+}
+
+label {
+  margin-top: 25px;
+  margin-left: 5px;
+  font-size: 13px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  color: #fff;
+}
+
+.global--button {
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 3px;
+  border: black 1px solid;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #1f1f3d;
+  color: #fff;
+}
+
+/*----------Header----------*/
+
+header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1f1f3d;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.header__title {
+  font-weight: 800;
+  margin-left: 10px;
+  color: #fff;
+}
+
+.header__title--mid {
+  color: #ffc30c;
+}
+
+.header__form {
+  width: 300px;
+  display: flex;
+}
+
+.header__form__search--input {
+  width: 250px;
+  margin-right: 10px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 0px;
+  font-size: 12px;
+}
+
+.header__form__search--button {
+  background-color: lightgray;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  border: 1px solid #1f1f3d;
+  border-right: 0;
+  cursor: pointer;
+  padding: 5px;
+}
+
+/*----------Main----------*/
+
+main {
+  display: grid;
+  grid-template-columns: 300px auto;
+  width: 100%;
+  height: 94vh;
+  margin-top: 60px;
+}
+
+/*----------Tasks----------*/
+
+.card-zone {
+  column-width: 13em;
+}
+
+.card-zone__task-card__title,
+.card-zone__task-card__items {
+  font-weight: 400;
+  border-bottom: 1px solid #c7d3d8;
+  width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  color: #1f1f3d;
+  font-size: 16px;
+}
+
+.card-zone__task-card {
+  display: inline-block;
+  margin-left:  1rem;
+  margin-top:  0.5rem;
+  margin-bottom:  0.5rem;
+  width:  100%;
+  background-color: #fafdff;
+  border: 1px solid #c7d3d8;
+}
+
+.card-zone__task-card__footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.card-zone__task-card__footer--urgency-button,
+.card-zone__task-card__footer--delete-button {
+  height: 20px;
+  width: 20px;
+}
+
+/*----------Sidebar----------*/
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  border-right: 1px solid black;
+  background-color: #587a8a;
+}
+
+.sidebar__form {
+  display: flex;
+  flex-direction: column;
+  align-items: space-around;
+  border-bottom: 1px solid black;
+}
+
+.sidebar__form__make-task--button {
+  margin-top: 45px;
+}
+
+.sidebar__form__clear-all--button {
+  margin-bottom: 25px;
+}
+
+.sidebar__form__urgency--button {
+  margin-top: 25px;
+}
+
+.sidebar__form__todo--item--input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  width: 85%;
+  border-right: 0px;
+}
+
+.sidebar__form__todo--item--container {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: relative;
+}
+
+.sidebar__form__todo__item--button {
+  background-color: #1f1f3d;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: 1px solid black;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.sidebar__form__todo__item--button--1,
+.sidebar__form__todo__item--button--2 {
+  width: 25px;
+  height: 1px;
+  background-color: #fff;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sidebar__form__todo__item--button--1 {
+  margin-top: 50%;
+}
+.sidebar__form__todo__item--button--2 {
+  display: absolute;
+  transform: rotate(90deg);
+  margin-top: -1px;
+}
+.sidebar__form--list-items {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.item-close-btn {
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: green;

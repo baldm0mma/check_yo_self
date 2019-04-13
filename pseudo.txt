@@ -2,7 +2,10 @@ class
   constructor
     this.id = datenow()
     this.title = string
-    this.tasks = {}
+    this.tasks = [{
+      done: boolean,
+      text: 'string'
+    }]
     this.urgent = boolean
   (methods)
     saveToStorage()
