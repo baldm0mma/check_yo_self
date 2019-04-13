@@ -1,13 +1,13 @@
-class listCard {
-  constructor(title, taskList) {
+class Card {
+  constructor(title, taskItemsArray) {
     this.title = title;
-    this.taskList = taskList;
+    this.taskList = taskItemsArray;
     this.urgent = false;
     this.id = Date.now();
   }
 
   saveToStorage() {
-    var stringifyData = JSON.stringify(todoCards);
+    var stringifyData = JSON.stringify(todoCardsArray);
     localStorage.setItem("todos", stringifyData);
   }
 
@@ -24,7 +24,7 @@ class listCard {
   } 
 }
 
-class items {
+class Items {
   constructor(content) {
     this.content = content;
     this.done = false;
