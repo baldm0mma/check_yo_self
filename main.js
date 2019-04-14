@@ -19,8 +19,8 @@ var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
 // taskTitleInput.addEventListener('input', ????);
 // taskItemInput.addEventListener('input', ????);
 addTaskItemButton.addEventListener('click', addItemsToArray);
-makeTaskListButton.addEventListener('click', heavyWork);
-// clearAll.addEventListener('click', ???);
+makeTaskListButton.addEventListener('click', onSubmitBtnClick);
+clearAll.addEventListener('click', clearEverything);
 // filterUrgency.addEventListener('click', ????);
 // cardArea.addEventListener('click', ????);
 listArea.addEventListener('click', deleteSidebarListItem);
@@ -40,16 +40,7 @@ function addListItemToSidebar(newListItem) {
 }
 
 function deleteSidebarListItem(e) {
-  console.log(e.target);
-  if (e.target.className === 'sidebar__insert-list--delete-button') {
-    var item = e.target.closest('.sidebar__insert-list');
-    console.log(item);
-    item.remove();
-    // var indexToRemove = findListItemIndex(item);
-    // removeListItemData(indexToRemove);
-    // if (document.querySelectorAll('.card').length === 0) {
-    //   showPrompt();
-  }
+  e.target.closest('li').remove();
 }
 
 function findListItemIndex(item) {
@@ -64,11 +55,21 @@ function removeListItemData(index) {
   listItemForDeletion.splice(index, 1);
 }
 
-function deleteListItemToSidebar() {
+function deleteAllListItemInSidebar() {
   var removeLiNodes = document.getElementById('list-items');
   while (removeLiNodes.firstChild) {
     removeLiNodes.removeChild(removeLiNodes.firstChild);
   } 
+}
+
+function clearEverything(e) {
+  deleteAllListItemInSidebar();
+  clearInputFields();
+}
+
+function clearInputFields() {
+  taskItemInput.value = '';
+  taskTitleInput.value = '';
 }
 
 function addItemsToArray() {
@@ -78,7 +79,7 @@ function addItemsToArray() {
   addListItemToSidebar(newListItem);
 }
 
-function heavyWork() {
+function onSubmitBtnClick() {
   createTodo(taskItemsArray);
 }
 
@@ -89,9 +90,9 @@ function createTodo() {
   todoCardsArray.push(newTodoCard);
   console.log(todoCardsArray);
   newTodoCard.saveToStorage();
-  deleteListItemToSidebar();
-  taskTitleInput.value = '';
   appendCardToDOM(newTodoCard);
+  deleteAllListItemInSidebar();
+  clearInputFields();
   taskItemsArray = [];
 }
 
@@ -101,13 +102,19 @@ function appendCardToDOM(newTodoCard) {
   <div class="card-zone__task-card" data-id="${newTodoCard.id}">
     <h3 class="card-zone__task-card__title">${newTodoCard.title}</h3>
     <div class="card-zone__task-card__items">
-      <ul>
-        
+      <ul class="card-zone__populate">
+      ${iterateThruTasks(newTodoCard)}
       </ul>
     </div>
     <div class="card-zone__task-card__footer">
-      <img class="card-zone__task-card__footer--urgency-button" id="${newTodoCard.urgent}" src="images/urgent.svg">
-      <img class="card-zone__task-card__footer--delete-button" src="images/delete.svg">
+      <div class="card-zone__task-card__footer left">
+        <img class="card-zone__task-card__footer--urgency-button" id="${newTodoCard.urgent}" src="images/urgent.svg">
+        <p>URGENT</p>
+      </div>
+      <div class="card-zone__task-card__footer right">
+        <img class="card-zone__task-card__footer--delete-button" src="images/delete.svg">
+        <p>DELETE</p>
+      </div>
     </div>
   </div>
   `;
@@ -115,7 +122,7 @@ function appendCardToDOM(newTodoCard) {
 }
 
 function iterateThruTasks(newTodoCard) {
-  var taskListIteration;
+  var taskListIteration = '';
   for (var i = 0; i < newTodoCard.taskList.length; i++){
     taskListIteration += `
       <li>
@@ -125,5 +132,3 @@ function iterateThruTasks(newTodoCard) {
       `
   } return taskListIteration;
 }
-
-// ${iterateThruTasks(newTodoCard)}
