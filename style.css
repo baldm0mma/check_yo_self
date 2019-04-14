@@ -112,6 +112,7 @@ main {
 
 .card-zone {
   column-width: 13em;
+  background-color: #f3f6f7;
 }
 
 .card-zone__task-card__title,
@@ -123,7 +124,7 @@ main {
   margin-right: auto;
   padding: 5px;
   color: #1f1f3d;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .card-zone__task-card {
@@ -133,19 +134,33 @@ main {
   margin-bottom:  0.5rem;
   width:  100%;
   background-color: #fafdff;
-  border: 1px solid #c7d3d8;
+  border: 2px solid #c7d3d8;
+  color: #1f1f3d;
 }
 
 .card-zone__task-card__footer {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
+}
+
+.card-zone__task-card__footer p {
+  padding-top: 5px;
+}
+
+.card-zone__task-card__footer.left,
+.card-zone__task-card__footer.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 12px;
 }
 
 .card-zone__task-card__footer--urgency-button,
-.card-zone__task-card__footer--delete-button {
-  height: 20px;
-  width: 20px;
+.card-zone__task-card__footer--delete-button,
+.sidebar__insert-list--delete-button {
+  height: 25px;
+  width: 25px;
 }
 
 /*----------Sidebar----------*/
@@ -232,3 +247,14 @@ main {
   width: 12px;
   border-radius: 50%;
   background-color: green;
+}
+
+.sidebar__insert-list {
+  margin: 10px;
+}
+
+.sidebar__insert-list--text {
+  color: #fff;
+  font-size: 24px;
+  margin-left: 10px;
+}

@@ -7,7 +7,8 @@ var makeTaskListButton = document.querySelector('.sidebar__form__make-task--butt
 var clearAll = document.querySelector('.sidebar__form__clear-all--button');
 var filterUrgency = document.querySelector('.sidebar__form__urgency--button');
 var cardArea = document.querySelector('.card-zone');
-var listAddArea = document.querySelector('.sidebar__form--list-items');
+var listArea = document.querySelector('.sidebar__form--list-items');
+var deleteListItemFromSidebar = document.querySelector('.sidebar__insert-list--delete-button');
 
 var taskItemsArray = [];
 var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
@@ -17,97 +18,117 @@ var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
 // searchButton.addEventListener('click', ????);
 // taskTitleInput.addEventListener('input', ????);
 // taskItemInput.addEventListener('input', ????);
-addTaskItemButton.addEventListener('click', addListItemToSidebar);
-makeTaskListButton.addEventListener('click', heavyWork);
-// clearAll.addEventListener('click', ???);
+addTaskItemButton.addEventListener('click', addItemsToArray);
+makeTaskListButton.addEventListener('click', onSubmitBtnClick);
+clearAll.addEventListener('click', clearEverything);
 // filterUrgency.addEventListener('click', ????);
 // cardArea.addEventListener('click', ????);
+listArea.addEventListener('click', deleteSidebarListItem);
 
 function onLoad() {
 
 }
 
-function addListItemToSidebar() {
+function addListItemToSidebar(newListItem) {
   var listText = `
-    <li class="sidebar__insert-list">
-      <p class="sidebar__insert-list--check-mark">x</p>
-      <p class="sidebar__insert-list--text">${taskItemInput.value}</p>
+    <li class="sidebar__insert-list item" data-id="${newListItem.id}">
+      <img class="sidebar__insert-list--delete-button item" src="images/delete.svg" alt="Delete task from sidebar list"/>
+      <p class="sidebar__insert-list--text item">${newListItem.content}</p>
     </li>`
-  listAddArea.insertAdjacentHTML('beforeend', listText);
-  addItemsToArray(taskItemInput.value);
-  clearTaskItemInput();
-}
-
-function addListItemToSidebar
-
-function clearTaskItemInput() {
+    listArea.insertAdjacentHTML('beforeend', listText);
   taskItemInput.value = "";
 }
 
-function addItemsToArray(text) {
-  var object = new Items(text);
-  taskItemsArray.push(object);
-  console.log(taskItemsArray);
+function deleteSidebarListItem(e) {
+  e.target.closest('li').remove();
 }
 
-function heavyWork() {
+function findListItemIndex(item) {
+  var itemId = item.dataset.id;
+  return taskItemsArray.findIndex(function(item) {
+    return item.id == itemId;
+  });
+}
+
+function removeListItemData(index) {
+  var listItemForDeletion = taskItemsArray[index];
+  listItemForDeletion.splice(index, 1);
+}
+
+function deleteAllListItemInSidebar() {
+  var removeLiNodes = document.getElementById('list-items');
+  while (removeLiNodes.firstChild) {
+    removeLiNodes.removeChild(removeLiNodes.firstChild);
+  } 
+}
+
+function clearEverything(e) {
+  deleteAllListItemInSidebar();
+  clearInputFields();
+}
+
+function clearInputFields() {
+  taskItemInput.value = '';
+  taskTitleInput.value = '';
+}
+
+function addItemsToArray() {
+  var newListItem = new Items(taskItemInput.value);
+  taskItemsArray.push(newListItem);
+  console.log(taskItemsArray);
+  addListItemToSidebar(newListItem);
+}
+
+function onSubmitBtnClick() {
   createTodo(taskItemsArray);
-  // appendCardToDOM();
 }
 
 function createTodo() {
   console.log(taskItemsArray);
-  var makeNewTodoCard = new Card(taskTitleInput.value, taskItemsArray);
-  todoCardsArray.push(makeNewTodoCard);
+  var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
+  console.log(newTodoCard.taskList.length);
+  todoCardsArray.push(newTodoCard);
   console.log(todoCardsArray);
-  makeNewTodoCard.saveToStorage();
+  newTodoCard.saveToStorage();
+  appendCardToDOM(newTodoCard);
+  deleteAllListItemInSidebar();
+  clearInputFields();
   taskItemsArray = [];
 }
 
-// appendCardToDOM
 
+function appendCardToDOM(newTodoCard) {
+  var card = `
+  <div class="card-zone__task-card" data-id="${newTodoCard.id}">
+    <h3 class="card-zone__task-card__title">${newTodoCard.title}</h3>
+    <div class="card-zone__task-card__items">
+      <ul class="card-zone__populate">
+      ${iterateThruTasks(newTodoCard)}
+      </ul>
+    </div>
+    <div class="card-zone__task-card__footer">
+      <div class="card-zone__task-card__footer left">
+        <img class="card-zone__task-card__footer--urgency-button" id="${newTodoCard.urgent}" src="images/urgent.svg">
+        <p>URGENT</p>
+      </div>
+      <div class="card-zone__task-card__footer right">
+        <img class="card-zone__task-card__footer--delete-button" src="images/delete.svg">
+        <p>DELETE</p>
+      </div>
+    </div>
+  </div>
+  `;
+  cardArea.insertAdjacentHTML('afterbegin', card)
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// -------------------------------
-// function makeCard(e) {
-//   e.preventDefault();
-//   taskItemsArray.forEach(function(el) {
-//     var item = `
-//     <input type="checkbox" class="card-zone__task-card__items--checkbox">
-//     <p class="card-zone__task-card__items--text">${el.content}</p>`
-//   });
-//   var card = `
-//     <div class="card-zone__task-card">
-//       <h3 class="card-zone__task-card__title">${taskTitleInput.value}</h3>
-//       <div class="card-zone__task-card__items">
-//         ${}
-//       </div>
-//       <div class="card-zone__task-card__footer">
-//         <img class="card-zone__task-card__footer--urgency-button">
-//         <img class="card-zone__task-card__footer--delete-button">
-//       </div>
-//     </div>`
-//     cardArea.insertAdjacentHTML('afterbegin', card);
-// }
+function iterateThruTasks(newTodoCard) {
+  var taskListIteration = '';
+  for (var i = 0; i < newTodoCard.taskList.length; i++){
+    taskListIteration += `
+      <li>
+        <input type="checkbox" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
+        <p>${newTodoCard.taskList[i].content}</p>
+      </li>
+      `
+  } return taskListIteration;
+}
