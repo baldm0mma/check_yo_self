@@ -90,11 +90,11 @@ function addItemsToArray() {
 }
 
 function onSubmitBtnClick() {
-  createTodo(taskItemsArray);
+  createTodo();
 }
 
-function createTodo(taskItemsArray) {
-  // if (taskTitleInput.value && listArea.innerHTML === !'') {
+function createTodo() {
+  if (taskTitleInput.value && listArea.innerHTML !== '') {
     console.log(taskItemsArray);
     var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
     console.log(newTodoCard.taskList.length);
@@ -104,7 +104,7 @@ function createTodo(taskItemsArray) {
     appendCardToDOM(newTodoCard);
     deleteAllListItemInSidebar();
     clearInputFields();
-  // }
+  }
 }
 
 function repopulateDataAfterReload() {
@@ -118,7 +118,7 @@ function repopulateDataAfterReload() {
   restoreCards(todoCardsArray);
 }
 
-function restoreCards(ideaCollection) {
+function restoreCards(todoCardsArray) {
   todoCardsArray.forEach(function(datum) {
     appendCardToDOM(datum);
   });
@@ -153,8 +153,8 @@ function iterateThruTasks(newTodoCard) {
   var taskListIteration = '';
   for (var i = 0; i < newTodoCard.taskList.length; i++){
     taskListIteration += `
-      <li>
-        <input type="checkbox" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
+      <li class="card-zone__populate--li">
+        <img class="card__task-delete" src="images/checkbox.svg" alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
         <p>${newTodoCard.taskList[i].content}</p>
       </li>
       `
