@@ -13,7 +13,7 @@ var deleteListItemFromSidebar = document.querySelector('.sidebar__insert-list--d
 var taskItemsArray = [];
 var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
 
-// window.addEventListener('load', onLoad);
+window.addEventListener('load', onLoad);
 // searchInput.addEventListener('input', ???);
 // searchButton.addEventListener('click', ????);
 // taskTitleInput.addEventListener('input', ????);
@@ -26,6 +26,7 @@ clearAll.addEventListener('click', clearEverything);
 listArea.addEventListener('click', deleteSidebarListItem);
 
 function onLoad() {
+  repopulateDataAfterReload();
   // buttonDefaultDisable();
 }
 
@@ -93,7 +94,7 @@ function onSubmitBtnClick() {
 }
 
 function createTodo(taskItemsArray) {
-  if (taskTitleInput.value && listArea.innerHTML === !'') {
+  // if (taskTitleInput.value && listArea.innerHTML === !'') {
     console.log(taskItemsArray);
     var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
     console.log(newTodoCard.taskList.length);
@@ -103,10 +104,25 @@ function createTodo(taskItemsArray) {
     appendCardToDOM(newTodoCard);
     deleteAllListItemInSidebar();
     clearInputFields();
-    taskItemsArray = [];
-  }
+  // }
 }
 
+function repopulateDataAfterReload() {
+  var oldTodoCardsArray = todoCardsArray;
+  console.log(oldTodoCardsArray);
+  var newInstances = oldTodoCardsArray.map(function(datum) {
+    datum = new Card(datum.title, datum.taskList, datum.urgent);
+    return datum;
+  }); 
+  todoCardsArray = newInstances;
+  restoreCards(todoCardsArray);
+}
+
+function restoreCards(ideaCollection) {
+  todoCardsArray.forEach(function(datum) {
+    appendCardToDOM(datum);
+  });
+}
 
 function appendCardToDOM(newTodoCard) {
   var card = `
@@ -130,6 +146,7 @@ function appendCardToDOM(newTodoCard) {
   </div>
   `;
   cardArea.insertAdjacentHTML('afterbegin', card)
+  taskItemsArray = [];
 }
 
 function iterateThruTasks(newTodoCard) {
@@ -145,40 +162,3 @@ function iterateThruTasks(newTodoCard) {
 }
 
 // ------------------------------------------------------------------------------------------
-
-function restoreMethods() {
-  var oldCollection = ideaCollection;
-  var newInstances = oldCollection.map(function(datum) {
-    datum = new Idea (datum.id, datum.title, datum.body, datum.star, datum.quality);
-    return datum;
-  }); 
-  ideaCollection = newInstances;
-  restoreCards(ideaCollection);
-}
-
-function restoreCards(ideaCollection) {
-  ideaCollection.forEach(function(datum) {
-    displayIdeas(datum);
-  });
-}
-
-function displayIdeas(ideaInstance) {
-  var ideaCard = `
-    <div class="card" data-id="${ideaInstance.id}">
-        <section class="cards__top card--section">
-          <div class="cards__top--left" alt="star-rating"></div>
-          <div class="cards__top--right" alt="delete-X"></div>
-        </section>
-        <section class="cards__middle card--section">
-          <h3 class="cards__middle--title" id="editable-title" contenteditable="true">${ideaInstance.title}</h3>
-          <p class="cards__middle--text" id="editable-body" contenteditable="true">${ideaInstance.body}</p>
-        </section>
-        <section class="cards__bottom card--section">
-          <img class="cards__bottom--left" src="images/upvote.svg">
-          <p class="cards__bottom--text">Quality: ${ideaInstance.quality}</p>
-          <img class="cards__bottom--right" src="images/downvote.svg">
-        </section>
-      </div>`;
-  cardTable.insertAdjacentHTML('afterbegin', ideaCard)
-  hidePrompt();
-}

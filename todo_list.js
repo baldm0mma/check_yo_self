@@ -1,8 +1,8 @@
 class Card {
-  constructor(title, taskItemsArray) {
+  constructor(title, taskItemsArray, urgent) {
     this.title = title;
     this.taskList = taskItemsArray;
-    this.urgent = false;
+    this.urgent = urgent || false;
     this.id = Date.now();
   }
 
