@@ -5,6 +5,10 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+html {
+  background-color: #f3f6f7;
+}
+
 .global--input {
   outline: none;
   border: black 1px solid;
@@ -19,12 +23,13 @@
 
 label {
   margin-top: 25px;
-  margin-left: 5px;
-  font-size: 13px;
+  margin-bottom: 5px;
+  font-size: 14px;
   width: 90%;
+  font-weight: 600;
   margin-left: auto;
   margin-right: auto;
-  color: #fff;
+  color: #C8D3D9;
 }
 
 .global--button {
@@ -112,19 +117,8 @@ main {
 
 .card-zone {
   column-width: 13em;
+  width: 93%;
   background-color: #f3f6f7;
-}
-
-.card-zone__task-card__title,
-.card-zone__task-card__items {
-  font-weight: 400;
-  border-bottom: 1px solid #c7d3d8;
-  width: 96%;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 5px;
-  color: #1f1f3d;
-  font-size: 20px;
 }
 
 .card-zone__task-card {
@@ -135,7 +129,22 @@ main {
   width:  100%;
   background-color: #fafdff;
   border: 2px solid #c7d3d8;
+}
+
+.card-zone__task-card__title,
+.card-zone__task-card__items {
+  font-weight: 400;
+  border-bottom: 1px solid #c7d3d8;
+  width: 96%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px; 
   color: #1f1f3d;
+  font-size: 20px;
+}
+
+.card-zone__task-card__title {
+  font-weight: 700;
 }
 
 .card-zone__task-card__footer {
@@ -161,6 +170,16 @@ main {
 .sidebar__insert-list--delete-button {
   height: 25px;
   width: 25px;
+}
+
+.card__task-delete {
+  height: 20px;
+  width: 20px;
+  margin-right: 5px;
+}
+
+.card-zone__populate--li {
+  margin: 10px 0;
 }
 
 /*----------Sidebar----------*/
@@ -254,7 +273,7 @@ main {
 }
 
 .sidebar__insert-list--text {
-  color: #fff;
+  color: #C8D3D9;
   font-size: 24px;
   margin-left: 10px;
 }
