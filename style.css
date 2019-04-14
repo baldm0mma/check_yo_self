@@ -143,9 +143,10 @@ main {
 }
 
 .card-zone__task-card__footer--urgency-button,
-.card-zone__task-card__footer--delete-button {
-  height: 20px;
-  width: 20px;
+.card-zone__task-card__footer--delete-button,
+.sidebar__insert-list--delete-button {
+  height: 25px;
+  width: 25px;
 }
 
 /*----------Sidebar----------*/
@@ -232,3 +233,14 @@ main {
   width: 12px;
   border-radius: 50%;
   background-color: green;
+}
+
+.sidebar__insert-list {
+  margin: 10px;
+}
+
+.sidebar__insert-list--text {
+  color: #fff;
+  font-size: 24px;
+  margin-left: 10px;
+}
