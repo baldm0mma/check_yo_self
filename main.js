@@ -7,7 +7,7 @@ var makeTaskListButton = document.querySelector('.sidebar__form__make-task--butt
 var clearAll = document.querySelector('.sidebar__form__clear-all--button');
 var filterUrgency = document.querySelector('.sidebar__form__urgency--button');
 var cardArea = document.querySelector('.card-zone');
-var listAddArea = document.querySelector('.sidebar__form--list-items');
+var listArea = document.querySelector('.sidebar__form--list-items');
 
 var taskItemsArray = [];
 var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
@@ -29,30 +29,30 @@ function onLoad() {
 
 function addListItemToSidebar() {
   var listText = `
-    <li class="sidebar__insert-list">
-      <p class="sidebar__insert-list--check-mark">x</p>
-      <p class="sidebar__insert-list--text">${taskItemInput.value}</p>
+    <li class="sidebar__insert-list item">
+      <p class="sidebar__insert-list--check-mark item">x</p>
+      <p class="sidebar__insert-list--text item">${taskItemInput.value}</p>
     </li>`
-  listAddArea.insertAdjacentHTML('beforeend', listText);
+    listArea.insertAdjacentHTML('beforeend', listText);
   addItemsToArray(taskItemInput.value);
-  clearTaskItemInput();
-}
-
-function addListItemToSidebar
-
-function clearTaskItemInput() {
   taskItemInput.value = "";
 }
 
+function deleteListItemToSidebar() {
+  var removeLiNodes = document.getElementById('list-items');
+  while (removeLiNodes.firstChild) {
+    removeLiNodes.removeChild(removeLiNodes.firstChild);
+  } 
+}
+
 function addItemsToArray(text) {
-  var object = new Items(text);
-  taskItemsArray.push(object);
+  var newListItem = new Items(text);
+  taskItemsArray.push(newListItem);
   console.log(taskItemsArray);
 }
 
 function heavyWork() {
   createTodo(taskItemsArray);
-  // appendCardToDOM();
 }
 
 function createTodo() {
@@ -61,53 +61,37 @@ function createTodo() {
   todoCardsArray.push(makeNewTodoCard);
   console.log(todoCardsArray);
   makeNewTodoCard.saveToStorage();
+  deleteListItemToSidebar();
+  taskTitleInput.value = '';
+  appendCardToDOM(makeNewTodoCard);
   taskItemsArray = [];
 }
 
-// appendCardToDOM
 
+function appendCardToDOM(todoCardsArray) {
+  var card = `
+  <div class="card-zone__task-card" data-id="${todoCardsArray.id}">
+    <h3 class="card-zone__task-card__title">${todoCardsArray.title}</h3>
+    <div class="card-zone__task-card__items">
+      <ul>
+        ${iterateThruTasks(taskItemsArray)}
+      </ul>
+    </div>
+    <div class="card-zone__task-card__footer">
+      <img class="card-zone__task-card__footer--urgency-button" id="${todoCardsArray.urgent}" src="images/urgent.svg">
+      <img class="card-zone__task-card__footer--delete-button" src="images/delete.svg">
+    </div>
+  </div>
+  `;
+  cardArea.insertAdjacentHTML('afterbegin', card)
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// -------------------------------
-// function makeCard(e) {
-//   e.preventDefault();
-//   taskItemsArray.forEach(function(el) {
-//     var item = `
-//     <input type="checkbox" class="card-zone__task-card__items--checkbox">
-//     <p class="card-zone__task-card__items--text">${el.content}</p>`
-//   });
-//   var card = `
-//     <div class="card-zone__task-card">
-//       <h3 class="card-zone__task-card__title">${taskTitleInput.value}</h3>
-//       <div class="card-zone__task-card__items">
-//         ${}
-//       </div>
-//       <div class="card-zone__task-card__footer">
-//         <img class="card-zone__task-card__footer--urgency-button">
-//         <img class="card-zone__task-card__footer--delete-button">
-//       </div>
-//     </div>`
-//     cardArea.insertAdjacentHTML('afterbegin', card);
-// }
+function iterateThruTasks(taskItemsArray) {
+  var taskItemsIteration;
+  for (var i = 0; i < taskItemsArray.length; i++){
+    taskItemsIteration += `
+      <li><input type="checkbox" data-id=${taskItemsArray[i].id} id="index ${i}"/>
+      <p>${taskItemsArray[i].content}</p></li>
+      `
+  } return taskItemsIteration
+}
