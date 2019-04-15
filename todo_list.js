@@ -1,9 +1,9 @@
 class Card {
-  constructor(title, taskItemsArray, urgent) {
+  constructor(title, taskItemsArray, urgent, id) {
     this.title = title;
     this.taskList = taskItemsArray;
     this.urgent = urgent || false;
-    this.id = Date.now();
+    this.id = id || Date.now();
   }
 
   saveToStorage() {
@@ -15,8 +15,8 @@ class Card {
 
   }
 
-  updateToDos() {
-
+  updateToDos(index) {
+    todoCardsArray[index].urgent = true;
   }
 
   updateTask() {

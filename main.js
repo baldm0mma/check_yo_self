@@ -22,7 +22,7 @@ addTaskItemButton.addEventListener('click', addItemsToArray);
 makeTaskListButton.addEventListener('click', onSubmitBtnClick);
 clearAll.addEventListener('click', clearEverything);
 // filterUrgency.addEventListener('click', ????);
-// cardArea.addEventListener('click', ????);
+cardArea.addEventListener('click', targetCardUrgent);
 listArea.addEventListener('click', deleteSidebarListItem);
 
 function onLoad() {
@@ -58,10 +58,10 @@ function findListItemIndex(item) {
   });
 }
 
-function removeListItemData(index) {
-  var listItemForDeletion = taskItemsArray[index];
-  listItemForDeletion.splice(index, 1);
-}
+// function removeListItemData(index) {
+//   var listItemForDeletion = taskItemsArray[index];
+//   listItemForDeletion.splice(index, 1);
+// }
 
 function deleteAllListItemInSidebar() {
   var removeLiNodes = document.getElementById('list-items');
@@ -90,10 +90,10 @@ function addItemsToArray() {
 }
 
 function onSubmitBtnClick() {
-  createTodo();
+  createTodoCard();
 }
 
-function createTodo() {
+function createTodoCard() {
   if (taskTitleInput.value && listArea.innerHTML !== '') {
     console.log(taskItemsArray);
     var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
@@ -111,7 +111,7 @@ function repopulateDataAfterReload() {
   var oldTodoCardsArray = todoCardsArray;
   console.log(oldTodoCardsArray);
   var newInstances = oldTodoCardsArray.map(function(datum) {
-    datum = new Card(datum.title, datum.taskList, datum.urgent);
+    datum = new Card(datum.title, datum.taskList, datum.urgent, datum.id);
     return datum;
   }); 
   todoCardsArray = newInstances;
@@ -126,7 +126,7 @@ function restoreCards(todoCardsArray) {
 
 function appendCardToDOM(newTodoCard) {
   var card = `
-  <div class="card-zone__task-card" data-id="${newTodoCard.id}">
+  <div class="card-zone__task-card" id="task-card" data-id="${newTodoCard.id}">
     <h3 class="card-zone__task-card__title">${newTodoCard.title}</h3>
     <div class="card-zone__task-card__items">
       <ul class="card-zone__populate">
@@ -134,11 +134,11 @@ function appendCardToDOM(newTodoCard) {
       </ul>
     </div>
     <div class="card-zone__task-card__footer">
-      <div class="card-zone__task-card__footer left">
+      <div class="card-zone__task-card__footer--left">
         <img class="card-zone__task-card__footer--urgency-button" id="${newTodoCard.urgent}" src="images/urgent.svg">
         <p>URGENT</p>
       </div>
-      <div class="card-zone__task-card__footer right">
+      <div class="card-zone__task-card__footer--right">
         <img class="card-zone__task-card__footer--delete-button" src="images/delete.svg">
         <p>DELETE</p>
       </div>
@@ -161,4 +161,84 @@ function iterateThruTasks(newTodoCard) {
   } return taskListIteration;
 }
 
+function targetCardUrgent(e) {
+  console.log(e.target);
+  if (e.target.className === 'card-zone__task-card__footer--left') {
+    var card = e.target.closest('.card-zone__task-card');
+    console.log(card);
+    var index = findCardIndex(card);
+    console.log(index);
+    makeCardUrgent(index);
+  }
+}
+
+function findCardIndex(card) {
+  var cardId = card.dataset.id;
+  console.log(cardId);
+  return todoCardsArray.findIndex(function(item) {
+    return item.id == cardId;
+  });
+}
+
+function makeCardUrgent(index) {
+  var cardToMakeUrgent = todoCardsArray[index];
+  cardToMakeUrgent.updateToDos(index);
+}
+
 // ------------------------------------------------------------------------------------------
+
+// function deleteDisplayedCards(e) {
+//   if (e.target.className === "cards__top--right") {
+//     var card = e.target.closest('.card');
+//     card.remove(); 
+//     var index = findCardIndex(card);
+//     removeCardData(index);
+//     if (document.querySelectorAll('.card').length === 0) {
+//       showPrompt();
+//     }
+//   }
+// }
+
+// function findCardIndex(card) {
+//   var cardId = card.dataset.id;
+//   return ideaCollection.findIndex(function(item) {
+//     return item.id == cardId;
+//   });
+// }
+
+// function removeCardData(index) {
+//   var ideaIWanttoDelete = ideaCollection[index];
+//   ideaIWanttoDelete.deleteFromStorage(index);
+// }
+
+// function editCardBody(e) {
+//   var card = e.target.closest('.card');
+//   if (e.target.className === 'cards__middle--text') {
+//     var bodyText = e.target.innerText;
+//     var index = findCardIndex(card);
+//     ideaCollection[index].updateBody(bodyText);
+//     ideaCollection[index].updateIdea();
+//   }
+//   if (e.target.className === 'cards__middle--title') {
+//     var titleText = e.target.innerText;
+//     var index = findCardIndex(card);
+//     ideaCollection[index].updateTitle(titleText);
+//     ideaCollection[index].updateIdea();
+//   }
+// }
+
+// function editStar(e) {
+//   var card = e.target.closest('.card');
+//   if (e.target.className === 'cards__top--left') {
+//     var index = findCardIndex(card);
+//     ideaCollection[index].updateStar();
+//     ideaCollection[index].updateIdea();
+//     console.log(e.target);
+//     if (e.target.classList.contains('star')) {
+//       e.target.classList.remove('star');
+//     }
+//     if (e.target.classList !== 'star') {
+//       e.target.classList.remove('star');
+//     }
+//   }
+// }
