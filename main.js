@@ -22,7 +22,7 @@ addTaskItemButton.addEventListener('click', addItemsToArray);
 makeTaskListButton.addEventListener('click', onSubmitBtnClick);
 clearAll.addEventListener('click', clearEverything);
 // filterUrgency.addEventListener('click', ????);
-cardArea.addEventListener('click', targetCardUrgent);
+cardArea.addEventListener('click', urgentAndDeleteBtns);
 listArea.addEventListener('click', deleteSidebarListItem);
 
 function onLoad() {
@@ -159,25 +159,19 @@ function iterateThruTasks(newTodoCard) {
   } return taskListIteration;
 }
 
-function targetCardUrgent(e) {
-  console.log(e.target);
+function urgentAndDeleteBtns(e) {
   if (e.target.className === 'card-zone__task-card__footer--urgency-button') {
-    console.log('after if', e.target);
-    var target = e.target;
-    var card = e.target.closest('.card-zone__task-card');
-    var index = findCardIndex(card);
-    console.log(card);
-    console.log(index);
-    makeCardDataUrgent(index, card, target);
+    targetCardUrgent(e);
+  }
+  if (e.target.className === 'card-zone__task-card__footer--delete-button') {
+    targetCardDelete(e);
   }
 }
 
-function findCardIndex(card) {
-  var cardId = card.dataset.id;
-  console.log(cardId);
-  return todoCardsArray.findIndex(function(item) {
-    return item.id == cardId;
-  });
+function targetCardUrgent(e) {
+  var card = e.target.closest('.card-zone__task-card');
+  var index = findCardIndex(card);
+  makeCardDataUrgent(index);
 }
 
 function makeCardDataUrgent(index) {
@@ -186,6 +180,22 @@ function makeCardDataUrgent(index) {
   cardToMakeUrgent.saveToStorage();
   cardArea.innerHTML = '';
   repopulateDataAfterReload();
+}
+
+function targetCardDelete(e) {
+  var card = e.target.closest('.card-zone__task-card');
+  var index = findCardIndex(card);
+  todoCardsArray[index].deleteFromStorage(index);
+  cardArea.innerHTML = '';
+  repopulateDataAfterReload();
+}
+
+function findCardIndex(card) {
+  var cardId = card.dataset.id;
+  console.log(cardId);
+  return todoCardsArray.findIndex(function(item) {
+    return item.id == cardId;
+  });
 }
 
 // ------------------------------------------------------------------------------------------

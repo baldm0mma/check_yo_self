@@ -12,7 +12,7 @@ class Card {
   }
 
   deleteFromStorage(index) {
-    ideaCollection.splice(index, 1);
+    todoCardsArray.splice(index, 1);
     this.saveToStorage(); 
   }
 
