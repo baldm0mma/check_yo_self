@@ -28,6 +28,7 @@ class Card {
     this.taskList[index].done ? 
       this.taskList[index].doneImg = 'images/checkbox-active.svg' : 
       this.taskList[index].doneImg = 'images/checkbox.svg';
+      
     this.saveToStorage();
   } 
 }
