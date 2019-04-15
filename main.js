@@ -170,9 +170,10 @@ function targetCardUrgent(e) {
   if (e.target.className === 'card-zone__task-card__footer--left') {
     var card = e.target.closest('.card-zone__task-card');
     console.log(card);
+    card.classList.add('urgent');
     var index = findCardIndex(card);
     console.log(index);
-    makeCardUrgent(index);
+    makeCardDataUrgent(index, card);
   }
 }
 
@@ -184,10 +185,20 @@ function findCardIndex(card) {
   });
 }
 
-function makeCardUrgent(index) {
+function makeCardDataUrgent(index, card) {
   var cardToMakeUrgent = todoCardsArray[index];
   cardToMakeUrgent.updateToDos(index);
   cardToMakeUrgent.saveToStorage();
+  updateDomUrgency(index, card);
+}
+
+function updateDomUrgency(index, card) {
+  if (todoCardsArray[index].urgency) {
+    console.log(todoCardsArray[index]);
+    card.classList.add('urgent');
+  } else {
+    card.classList.remove('urgent');
+  }
 }
 
 // ------------------------------------------------------------------------------------------
