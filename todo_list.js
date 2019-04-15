@@ -1,9 +1,9 @@
 class Card {
-  constructor(title, taskItemsArray, urgent) {
+  constructor(title, taskItemsArray, urgent, id) {
     this.title = title;
     this.taskList = taskItemsArray;
     this.urgent = urgent || false;
-    this.id = Date.now();
+    this.id = id || Date.now();
   }
 
   saveToStorage() {
@@ -11,12 +11,13 @@ class Card {
     localStorage.setItem("todos", stringifyData);
   }
 
-  deleteFromStorage() {
-
+  deleteFromStorage(index) {
+    ideaCollection.splice(index, 1);
+    this.saveToStorage(); 
   }
 
   updateToDos() {
-
+    this.urgent = !this.urgent;
   }
 
   updateTask() {

@@ -155,14 +155,16 @@ main {
 
 .card-zone__task-card__footer p {
   padding-top: 5px;
+  color: #3c6577;
 }
 
-.card-zone__task-card__footer.left,
-.card-zone__task-card__footer.right {
+.card-zone__task-card__footer--left,
+.card-zone__task-card__footer--right {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 12px;
+  z-index: 9999;
 }
 
 .card-zone__task-card__footer--urgency-button,
@@ -196,7 +198,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: space-around;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid #3c6577;
 }
 
 .sidebar__form__make-task--button {
