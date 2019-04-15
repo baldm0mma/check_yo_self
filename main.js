@@ -86,6 +86,8 @@ function addItemsToArray() {
     taskItemsArray.push(newListItem);
     console.log(taskItemsArray);
     addListItemToSidebar(newListItem);
+  } else {
+    alert('Please enter a task first!')
   }
 }
 
@@ -104,6 +106,8 @@ function createTodoCard() {
     appendCardToDOM(newTodoCard);
     deleteAllListItemInSidebar();
     clearInputFields();
+  } else {
+    alert('Please enter a Title and a few new Tasks for your ToDo list!');
   }
 }
 
@@ -183,6 +187,7 @@ function findCardIndex(card) {
 function makeCardUrgent(index) {
   var cardToMakeUrgent = todoCardsArray[index];
   cardToMakeUrgent.updateToDos(index);
+  cardToMakeUrgent.saveToStorage();
 }
 
 // ------------------------------------------------------------------------------------------

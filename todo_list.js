@@ -11,12 +11,13 @@ class Card {
     localStorage.setItem("todos", stringifyData);
   }
 
-  deleteFromStorage() {
-
+  deleteFromStorage(index) {
+    ideaCollection.splice(index, 1);
+    this.saveToStorage(); 
   }
 
-  updateToDos(index) {
-    todoCardsArray[index].urgent = true;
+  updateToDos() {
+    this.urgent = !this.urgent;
   }
 
   updateTask() {
