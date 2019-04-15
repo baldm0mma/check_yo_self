@@ -198,60 +198,6 @@ function findCardIndex(card) {
   });
 }
 
+function
+
 // ------------------------------------------------------------------------------------------
-
-// function deleteDisplayedCards(e) {
-//   if (e.target.className === "cards__top--right") {
-//     var card = e.target.closest('.card');
-//     card.remove(); 
-//     var index = findCardIndex(card);
-//     removeCardData(index);
-//     if (document.querySelectorAll('.card').length === 0) {
-//       showPrompt();
-//     }
-//   }
-// }
-
-// function findCardIndex(card) {
-//   var cardId = card.dataset.id;
-//   return ideaCollection.findIndex(function(item) {
-//     return item.id == cardId;
-//   });
-// }
-
-// function removeCardData(index) {
-//   var ideaIWanttoDelete = ideaCollection[index];
-//   ideaIWanttoDelete.deleteFromStorage(index);
-// }
-
-// function editCardBody(e) {
-//   var card = e.target.closest('.card');
-//   if (e.target.className === 'cards__middle--text') {
-//     var bodyText = e.target.innerText;
-//     var index = findCardIndex(card);
-//     ideaCollection[index].updateBody(bodyText);
-//     ideaCollection[index].updateIdea();
-//   }
-//   if (e.target.className === 'cards__middle--title') {
-//     var titleText = e.target.innerText;
-//     var index = findCardIndex(card);
-//     ideaCollection[index].updateTitle(titleText);
-//     ideaCollection[index].updateIdea();
-//   }
-// }
-
-// function editStar(e) {
-//   var card = e.target.closest('.card');
-//   if (e.target.className === 'cards__top--left') {
-//     var index = findCardIndex(card);
-//     ideaCollection[index].updateStar();
-//     ideaCollection[index].updateIdea();
-//     console.log(e.target);
-//     if (e.target.classList.contains('star')) {
-//       e.target.classList.remove('star');
-//     }
-//     if (e.target.classList !== 'star') {
-//       e.target.classList.remove('star');
-//     }
-//   }
-// }
