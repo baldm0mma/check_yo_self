@@ -78,7 +78,7 @@ function addItemsToArray() {
 
     var newListItem = new Items(taskItemInput.value);
     taskItemsArray.push(newListItem);
-    console.log(taskItemsArray);
+    // console.log(taskItemsArray);
     addListItemToSidebar(newListItem);
   } else {
     alert('Please enter a task first!')
@@ -91,11 +91,11 @@ function onSubmitBtnClick() {
 
 function createTodoCard() {
   if (taskTitleInput.value && listArea.innerHTML !== '') {
-    console.log(taskItemsArray);
+    // console.log(taskItemsArray);
     var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
-    console.log(newTodoCard.taskList.length);
+    // console.log(newTodoCard.taskList.length);
     todoCardsArray.push(newTodoCard);
-    console.log(todoCardsArray);
+    // console.log(todoCardsArray);
     newTodoCard.saveToStorage();
     appendCardToDOM(newTodoCard);
     deleteAllListItemInSidebar();
@@ -107,7 +107,7 @@ function createTodoCard() {
 
 function repopulateDataAfterReload() {
   var oldTodoCardsArray = todoCardsArray;
-  console.log(oldTodoCardsArray);
+  // console.log(oldTodoCardsArray);
   var newInstances = oldTodoCardsArray.map(function(datum) {
     datum = new Card(datum.title, datum.taskList, datum.urgent, datum.id);
     return datum;
@@ -166,6 +166,9 @@ function urgentAndDeleteBtns(e) {
   if (e.target.className === 'card-zone__task-card__footer--delete-button') {
     targetCardDelete(e);
   }
+  if (e.target.className === 'card__task-delete') {
+    targetListItem(e);
+  }
 }
 
 function targetCardUrgent(e) {
@@ -192,12 +195,27 @@ function targetCardDelete(e) {
 
 function findCardIndex(card) {
   var cardId = card.dataset.id;
-  console.log(cardId);
+  // console.log(cardId);
   return todoCardsArray.findIndex(function(item) {
     return item.id == cardId;
   });
 }
 
-function
+function targetListItem(e) {
+  var taskId = e.target.dataset.id;
+  // console.log(task);
+  var card = e.target.closest('.card-zone__task-card');
+  var index = findCardIndex(card);
+  var todoObject = todoCardsArray[index];
+  var specificTaskIndex = findItemIndex(todoObject, taskId);
+  console.log(specificTaskIndex);
+  todoObject.updateTask(specificTaskIndex);
+}
+
+function findItemIndex(todoObject, taskId) {
+  return todoObject.taskList.findIndex(function(item) {
+    return item.id == taskId;
+  });
+}
 
 // ------------------------------------------------------------------------------------------

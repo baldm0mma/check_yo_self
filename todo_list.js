@@ -22,8 +22,8 @@ class Card {
     this.urgent = !this.urgent;
   }
 
-  updateTask() {
-
+  updateTask(index) {
+    this.taskList[index].done = !this.done;
   } 
 }
 
