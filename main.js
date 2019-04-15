@@ -210,6 +210,8 @@ function targetListItem(e) {
   var specificTaskIndex = findItemIndex(todoObject, taskId);
   console.log(specificTaskIndex);
   todoObject.updateTask(specificTaskIndex);
+  cardArea.innerHTML = '';
+  repopulateDataAfterReload();
 }
 
 function findItemIndex(todoObject, taskId) {

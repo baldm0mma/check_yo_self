@@ -24,6 +24,7 @@ class Card {
 
   updateTask(index) {
     this.taskList[index].done = !this.done;
+    this.saveToStorage();
   } 
 }
 
