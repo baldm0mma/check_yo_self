@@ -153,7 +153,7 @@ function iterateThruTasks(newTodoCard) {
     taskListIteration += `
       <li class="card-zone__populate--li">
         <img class="card__task-delete" src="${newTodoCard.taskList[i].doneImg}" alt="Delete task on card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
-        <p id ="done-text-${newTodoCard.taskList[i].done}">${newTodoCard.taskList[i].content}</p>
+        <p id="done-text-${newTodoCard.taskList[i].done}">${newTodoCard.taskList[i].content}</p>
       </li>
       `
   } return taskListIteration;

@@ -20,6 +20,7 @@ class Card {
 
   updateToDos() {
     this.urgent = !this.urgent;
+    this.saveToStorage(); 
   }
 
   updateTask(index) {
