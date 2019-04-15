@@ -169,16 +169,16 @@ main {
   color: #3c6577;
 }
 
+#urgent-text-true {
+  color: #b23a25;
+}
+
 .card-zone__task-card__footer--left,
 .card-zone__task-card__footer--right {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 12px;
-}
-
-.card-zone__task-card__footer--left.urgent p {
-  color: #b23a25;
 }
 
 .card-zone__task-card__footer--urgency-button,

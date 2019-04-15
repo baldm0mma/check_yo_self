@@ -133,8 +133,8 @@ function appendCardToDOM(newTodoCard) {
     </div>
     <div class="card-zone__task-card__footer">
       <div class="card-zone__task-card__footer--left">
-        <img class="card-zone__task-card__footer--urgency-button" id="${newTodoCard.urgent}" src="images/urgent.svg">
-        <p>URGENT</p>
+        <img class="card-zone__task-card__footer--urgency-button" id="urgent-img-${newTodoCard.urgent}" src="${newTodoCard.urgentImg}">
+        <p id="urgent-text-${newTodoCard.urgent}">URGENT</p>
       </div>
       <div class="card-zone__task-card__footer--right">
         <img class="card-zone__task-card__footer--delete-button" src="images/delete.svg">
