@@ -4,6 +4,8 @@ class Card {
     this.taskList = taskItemsArray;
     this.urgent = urgent || false;
     this.id = id || Date.now();
+    this.urgentImg;
+    this.urgent ? this.urgentImg = 'images/urgent-active.svg' : this.urgentImg = 'images/urgent.svg';
   }
 
   saveToStorage() {
@@ -13,7 +15,7 @@ class Card {
 
   deleteFromStorage(index) {
     todoCardsArray.splice(index, 1);
-    this.saveToStorage(); 
+    this.saveToStorage();  
   }
 
   updateToDos() {
