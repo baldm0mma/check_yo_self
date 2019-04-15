@@ -78,7 +78,7 @@ function addItemsToArray() {
 
     var newListItem = new Items(taskItemInput.value);
     taskItemsArray.push(newListItem);
-    console.log(taskItemsArray);
+    // console.log(taskItemsArray);
     addListItemToSidebar(newListItem);
   } else {
     alert('Please enter a task first!')
@@ -91,11 +91,11 @@ function onSubmitBtnClick() {
 
 function createTodoCard() {
   if (taskTitleInput.value && listArea.innerHTML !== '') {
-    console.log(taskItemsArray);
+    // console.log(taskItemsArray);
     var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
-    console.log(newTodoCard.taskList.length);
+    // console.log(newTodoCard.taskList.length);
     todoCardsArray.push(newTodoCard);
-    console.log(todoCardsArray);
+    // console.log(todoCardsArray);
     newTodoCard.saveToStorage();
     appendCardToDOM(newTodoCard);
     deleteAllListItemInSidebar();
@@ -107,7 +107,7 @@ function createTodoCard() {
 
 function repopulateDataAfterReload() {
   var oldTodoCardsArray = todoCardsArray;
-  console.log(oldTodoCardsArray);
+  // console.log(oldTodoCardsArray);
   var newInstances = oldTodoCardsArray.map(function(datum) {
     datum = new Card(datum.title, datum.taskList, datum.urgent, datum.id);
     return datum;
@@ -166,6 +166,9 @@ function urgentAndDeleteBtns(e) {
   if (e.target.className === 'card-zone__task-card__footer--delete-button') {
     targetCardDelete(e);
   }
+  if (e.target.className === 'card__task-delete') {
+    targetListItem(e);
+  }
 }
 
 function targetCardUrgent(e) {
@@ -192,66 +195,27 @@ function targetCardDelete(e) {
 
 function findCardIndex(card) {
   var cardId = card.dataset.id;
-  console.log(cardId);
+  // console.log(cardId);
   return todoCardsArray.findIndex(function(item) {
     return item.id == cardId;
   });
 }
 
+function targetListItem(e) {
+  var taskId = e.target.dataset.id;
+  // console.log(task);
+  var card = e.target.closest('.card-zone__task-card');
+  var index = findCardIndex(card);
+  var todoObject = todoCardsArray[index];
+  var specificTaskIndex = findItemIndex(todoObject, taskId);
+  console.log(specificTaskIndex);
+  todoObject.updateTask(specificTaskIndex);
+}
+
+function findItemIndex(todoObject, taskId) {
+  return todoObject.taskList.findIndex(function(item) {
+    return item.id == taskId;
+  });
+}
+
 // ------------------------------------------------------------------------------------------
-
-// function deleteDisplayedCards(e) {
-//   if (e.target.className === "cards__top--right") {
-//     var card = e.target.closest('.card');
-//     card.remove(); 
-//     var index = findCardIndex(card);
-//     removeCardData(index);
-//     if (document.querySelectorAll('.card').length === 0) {
-//       showPrompt();
-//     }
-//   }
-// }
-
-// function findCardIndex(card) {
-//   var cardId = card.dataset.id;
-//   return ideaCollection.findIndex(function(item) {
-//     return item.id == cardId;
-//   });
-// }
-
-// function removeCardData(index) {
-//   var ideaIWanttoDelete = ideaCollection[index];
-//   ideaIWanttoDelete.deleteFromStorage(index);
-// }
-
-// function editCardBody(e) {
-//   var card = e.target.closest('.card');
-//   if (e.target.className === 'cards__middle--text') {
-//     var bodyText = e.target.innerText;
-//     var index = findCardIndex(card);
-//     ideaCollection[index].updateBody(bodyText);
-//     ideaCollection[index].updateIdea();
-//   }
-//   if (e.target.className === 'cards__middle--title') {
-//     var titleText = e.target.innerText;
-//     var index = findCardIndex(card);
-//     ideaCollection[index].updateTitle(titleText);
-//     ideaCollection[index].updateIdea();
-//   }
-// }
-
-// function editStar(e) {
-//   var card = e.target.closest('.card');
-//   if (e.target.className === 'cards__top--left') {
-//     var index = findCardIndex(card);
-//     ideaCollection[index].updateStar();
-//     ideaCollection[index].updateIdea();
-//     console.log(e.target);
-//     if (e.target.classList.contains('star')) {
-//       e.target.classList.remove('star');
-//     }
-//     if (e.target.classList !== 'star') {
-//       e.target.classList.remove('star');
-//     }
-//   }
-// }
