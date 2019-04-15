@@ -27,9 +27,7 @@ listArea.addEventListener('click', deleteSidebarListItem);
 
 function onLoad() {
   repopulateDataAfterReload();
-  // reinstateStates();
 }
-
 
 function addListItemToSidebar(newListItem) {
   var listText = `
