@@ -20,7 +20,6 @@ class Card {
 
   updateToDos() {
     this.urgent = !this.urgent;
-    this.saveToStorage(); 
   }
 
   updateTask(index) {
@@ -30,6 +29,8 @@ class Card {
       this.taskList[index].doneImg = 'images/checkbox.svg';
       
     this.saveToStorage();
+
+    this.taskList[index].done = !this.done;
   } 
 }
 
@@ -38,6 +39,5 @@ class Items {
     this.content = content;
     this.done = false;
     this.id = Date.now();
-    this.doneImg;
   }
 }

@@ -154,11 +154,6 @@ main {
   font-size: 20px;
 }
 
-#done-text-true {
-  color: #3c6577;
-  font-style: italic;
-}
-
 .card-zone__task-card__title {
   font-weight: 700;
 }
