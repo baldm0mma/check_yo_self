@@ -1,0 +1,42 @@
+@media screen and (max-width: 575px) {
+  
+  header {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header__title {
+    margin: 10px 7px 10px 0;
+  }
+
+  main {
+    grid-template-columns: auto;
+    height: 94vh;;
+  }
+
+  .sidebar {
+    height: 550px;
+  }
+
+  .sidebar__form {
+    margin-top: 70px;
+  }
+  
+  .sidebar__form__todo--item--container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .sidebar__form__todo--item--input {
+    width: 100%;
+  }
+
+  .card-zone {
+    display: grid;
+    align-items: center;
+    width: 92%;
+  }
+}

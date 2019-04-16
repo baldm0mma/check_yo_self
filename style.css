@@ -52,6 +52,10 @@ li {
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 /*----------Header----------*/
 
 header {
@@ -207,6 +211,13 @@ main {
 
 .card-zone__populate--li {
   margin: 10px 0;
+}
+
+.card-zone__taskPrompt {
+  font-size: 24px;
+  color: #1f1f3d;
+  margin: 15px;
+  font-weight: 700;
 }
 
 /*----------Sidebar----------*/
