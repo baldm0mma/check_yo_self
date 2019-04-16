@@ -152,8 +152,8 @@ function iterateThruTasks(newTodoCard) {
   for (var i = 0; i < newTodoCard.taskList.length; i++){
     taskListIteration += `
       <li class="card-zone__populate--li">
-        <img class="card__task-delete" src="images/checkbox.svg" alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
-        <p>${newTodoCard.taskList[i].content}</p>
+        <img class="card__task-delete" src="${newTodoCard.taskList[i].doneImg}" alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
+        <p id="check-off-${newTodoCard.taskList[i].done}">${newTodoCard.taskList[i].content}</p>
       </li>
       `
   } return taskListIteration;
@@ -210,6 +210,9 @@ function targetListItem(e) {
   var specificTaskIndex = findItemIndex(todoObject, taskId);
   console.log(specificTaskIndex);
   todoObject.updateTask(specificTaskIndex);
+  todoObject.saveToStorage();
+  cardArea.innerHTML = '';
+  repopulateDataAfterReload();
 }
 
 function findItemIndex(todoObject, taskId) {
