@@ -1,7 +1,7 @@
 class Card {
-  constructor(title, taskItemsArray, urgent, id) {
+  constructor(title, taskItems, urgent, id) {
     this.title = title;
-    this.taskList = taskItemsArray;
+    this.taskList = taskItems;
     this.urgent = urgent || false;
     this.id = id || Date.now();
     this.urgentImg;
@@ -9,12 +9,12 @@ class Card {
   }
 
   saveToStorage() {
-    var stringifyData = JSON.stringify(todoCardsArray);
+    var stringifyData = JSON.stringify(todoCards);
     localStorage.setItem("todos", stringifyData);
   }
 
   deleteFromStorage(index) {
-    todoCardsArray.splice(index, 1);
+    todoCards.splice(index, 1);
     this.saveToStorage();  
   }
 
