@@ -1,29 +1,33 @@
-var searchInput = document.querySelector('.header__form__search--input');
-var searchButton = document.querySelector('.header__form__search--button');
-var taskTitleInput = document.querySelector('.sidebar__form__todo--input');
-var taskItemInput = document.querySelector('.sidebar__form__todo--item--input');
+
+// Global Variables ------------------------------------------------------------------
+
 var addTaskItemButton = document.querySelector('.sidebar__form__todo__item--button');
-var makeTaskListButton = document.querySelector('.sidebar__form__make-task--button');
-var clearAll = document.querySelector('.sidebar__form__clear-all--button');
 var cardArea = document.querySelector('.card-zone');
-var listArea = document.querySelector('.sidebar__form--list-items');
+var clearAll = document.querySelector('.sidebar__form__clear-all--button');
 var deleteListItemFromSidebar = document.querySelector('.sidebar__insert-list--delete-button');
+var listArea = document.querySelector('.sidebar__form--list-items');
+var makeTaskListButton = document.querySelector('.sidebar__form__make-task--button');
 var prompt = document.querySelector('.card-zone__taskPrompt');
+var searchButton = document.querySelector('.header__form__search--button');
+var searchInput = document.querySelector('.header__form__search--input');
+var taskItemInput = document.querySelector('.sidebar__form__todo--item--input');
+var taskTitleInput = document.querySelector('.sidebar__form__todo--input');
 
-var taskItemsArray = [];
-var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
+// Global Arrays ------------------------------------------------------------------
 
-window.addEventListener('load', onLoad);
-// searchInput.addEventListener('input', ???);
-// searchButton.addEventListener('click', ????);
-// taskTitleInput.addEventListener('input', ????);
-// taskItemInput.addEventListener('input', ????);
+var taskItems = [];
+var todoCards = JSON.parse(localStorage.getItem("todos")) || [];
+
+// Event Listeners ------------------------------------------------------------------
+
 addTaskItemButton.addEventListener('click', addItemsToArray);
-makeTaskListButton.addEventListener('click', onSubmitBtnClick);
+cardArea.addEventListener('click', targetCardButtons);
 clearAll.addEventListener('click', clearEverything);
-// filterUrgency.addEventListener('click', ????);
-cardArea.addEventListener('click', urgentAndDeleteBtns);
-listArea.addEventListener('click', deleteSidebarListItem);
+listArea.addEventListener('click', deleteSingleSidebarListItem);
+makeTaskListButton.addEventListener('click', onSubmitBtnClick);
+window.addEventListener('load', onLoad);
+
+// On load functions ------------------------------------------------------------------
 
 function onLoad() {
   repopulateDataAfterReload();
@@ -31,12 +35,14 @@ function onLoad() {
 }
 
 function promptToggle() {
-  if (todoCardsArray.length > 0) {
+  if (todoCards.length > 0) {
     prompt.classList.add("hidden");
   } else {
     prompt.classList.remove("hidden");
   }
 }
+
+// Sidebar functions ------------------------------------------------------------------
 
 function addListItemToSidebar(newListItem) {
   var listText = `
@@ -48,51 +54,28 @@ function addListItemToSidebar(newListItem) {
   taskItemInput.value = "";
 }
 
-function deleteSidebarListItem(e) {
+function deleteSingleSidebarListItem(e) {
   e.target.closest('li').remove();
 }
 
-function findListItemIndex(item) {
-  var itemId = item.dataset.id;
-  return taskItemsArray.findIndex(function(item) {
-    return item.id == itemId;
-  });
-}
-
-// function removeListItemData(index) {
-//   var listItemForDeletion = taskItemsArray[index];
-//   listItemForDeletion.splice(index, 1);
-// }
-
-function deleteAllListItemInSidebar() {
+function deleteAllSidebarListItems() {
   var removeLiNodes = document.getElementById('list-items');
   while (removeLiNodes.firstChild) {
     removeLiNodes.removeChild(removeLiNodes.firstChild);
   } 
 }
 
-function clearEverything(e) {
-  deleteAllListItemInSidebar();
-  clearInputFields();
-  taskItemsArray = [];
-}
-
-function clearInputFields() {
-  taskItemInput.value = '';
-  taskTitleInput.value = '';
-}
-
 function addItemsToArray() {
   if (taskItemInput.value) {
-
     var newListItem = new Items(taskItemInput.value);
-    taskItemsArray.push(newListItem);
-    // console.log(taskItemsArray);
+    taskItems.push(newListItem);
     addListItemToSidebar(newListItem);
   } else {
     alert('Please enter a task first!')
   }
 }
+
+// On sidebar button click population functions ------------------------------------------------------
 
 function onSubmitBtnClick() {
   createTodoCard();
@@ -101,34 +84,15 @@ function onSubmitBtnClick() {
 
 function createTodoCard() {
   if (taskTitleInput.value && listArea.innerText !== '') {
-    // console.log(taskItemsArray);
-    var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
-    // console.log(newTodoCard.taskList.length);
-    todoCardsArray.push(newTodoCard);
-    // console.log(todoCardsArray);
+    var newTodoCard = new Card(taskTitleInput.value, taskItems);
+    todoCards.push(newTodoCard);
     newTodoCard.saveToStorage();
     appendCardToDOM(newTodoCard);
-    deleteAllListItemInSidebar();
+    deleteAllSidebarListItems();
     clearInputFields();
   } else {
     alert('Please enter a Title and a few new Tasks for your ToDo list!');
   }
-}
-
-function repopulateDataAfterReload() {
-  var oldTodoCardsArray = todoCardsArray;
-  var newInstances = oldTodoCardsArray.map(function(datum) {
-    datum = new Card(datum.title, datum.taskList, datum.urgent, datum.id);
-    return datum;
-  }); 
-  todoCardsArray = newInstances;
-  restoreCards(todoCardsArray);
-}
-
-function restoreCards(todoCardsArray) {
-  todoCardsArray.forEach(function(datum) {
-    appendCardToDOM(datum);
-  });
 }
 
 function appendCardToDOM(newTodoCard) {
@@ -137,7 +101,7 @@ function appendCardToDOM(newTodoCard) {
     <h3 class="card-zone__task-card__title ${newTodoCard.urgent}">${newTodoCard.title}</h3>
     <div class="card-zone__task-card__items ${newTodoCard.urgent}">
       <ul class="card-zone__populate">
-      ${iterateThruTasks(newTodoCard)}
+      ${appendTaskToCard(newTodoCard)}
       </ul>
     </div>
     <div class="card-zone__task-card__footer">
@@ -153,10 +117,10 @@ function appendCardToDOM(newTodoCard) {
   </div>
   `;
   cardArea.insertAdjacentHTML('afterbegin', card)
-  taskItemsArray = [];
+  taskItems = [];
 }
 
-function iterateThruTasks(newTodoCard) {
+function appendTaskToCard(newTodoCard) {
   var taskListIteration = '';
   for (var i = 0; i < newTodoCard.taskList.length; i++){
     taskListIteration += `
@@ -168,8 +132,25 @@ function iterateThruTasks(newTodoCard) {
   } return taskListIteration;
 }
 
-function urgentAndDeleteBtns(e) {
-  console.log(e.target);
+function repopulateDataAfterReload() {
+  var oldTodoCards = todoCards;
+  var newInstances = oldTodoCards.map(function(datum) {
+    datum = new Card(datum.title, datum.taskList, datum.urgent, datum.id);
+    return datum;
+  }); 
+  todoCards = newInstances;
+  restoreCards(todoCards);
+}
+
+function restoreCards(todoCards) {
+  todoCards.forEach(function(datum) {
+    appendCardToDOM(datum);
+  });
+}
+
+// Target card buttons functions ----------------------------------------------------------------
+
+function targetCardButtons(e) {
   if (e.target.className === 'card-zone__task-card__footer--urgency-button') {
     targetCardUrgent(e);
   }
@@ -188,7 +169,7 @@ function targetCardUrgent(e) {
 }
 
 function makeCardDataUrgent(index) {
-  var cardToMakeUrgent = todoCardsArray[index];
+  var cardToMakeUrgent = todoCards[index];
   cardToMakeUrgent.updateToDos();
   cardToMakeUrgent.saveToStorage();
   cardArea.innerHTML = '';
@@ -202,7 +183,7 @@ function targetCardForDeletion(e) {
 }
 
 function activateDeleteBtn(index) {
-  var deleteObj = todoCardsArray[index].taskList;
+  var deleteObj = todoCards[index].taskList;
   var newArray = deleteObj.filter(function(el) {
     return el.done === true;
   });
@@ -214,7 +195,7 @@ function activateDeleteBtn(index) {
 }
 
 function deleteCardData(index) {
-  todoCardsArray[index].deleteFromStorage(index);
+  todoCards[index].deleteFromStorage(index);
   cardArea.innerHTML = '';
   repopulateDataAfterReload();
   promptToggle();
@@ -222,7 +203,7 @@ function deleteCardData(index) {
 
 function findCardIndex(card) {
   var cardId = card.dataset.id;
-  return todoCardsArray.findIndex(function(item) {
+  return todoCards.findIndex(function(item) {
     return item.id == cardId;
   });
 }
@@ -231,9 +212,8 @@ function targetListItem(e) {
   var taskId = e.target.dataset.id;
   var card = e.target.closest('.card-zone__task-card');
   var index = findCardIndex(card);
-  var todoObject = todoCardsArray[index];
+  var todoObject = todoCards[index];
   var specificTaskIndex = findItemIndex(todoObject, taskId);
-  console.log(specificTaskIndex);
   todoObject.updateTask(specificTaskIndex);
   todoObject.saveToStorage();
   cardArea.innerHTML = '';
@@ -246,4 +226,15 @@ function findItemIndex(todoObject, taskId) {
   });
 }
 
-// ------------------------------------------------------------------------------------------
+// Global clearing functions ----------------------------------------------------------------
+
+function clearEverything(e) {
+  deleteAllSidebarListItems();
+  clearInputFields();
+  taskItems = [];
+}
+
+function clearInputFields() {
+  taskItemInput.value = '';
+  taskTitleInput.value = '';
+}
