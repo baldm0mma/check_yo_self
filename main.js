@@ -2,10 +2,9 @@ var searchInput = document.querySelector('.header__form__search--input');
 var searchButton = document.querySelector('.header__form__search--button');
 var taskTitleInput = document.querySelector('.sidebar__form__todo--input');
 var taskItemInput = document.querySelector('.sidebar__form__todo--item--input');
-var addTaskItemButton = document.querySelector('.sidebar__form__todo__item--button')
+var addTaskItemButton = document.querySelector('.sidebar__form__todo__item--button');
 var makeTaskListButton = document.querySelector('.sidebar__form__make-task--button');
 var clearAll = document.querySelector('.sidebar__form__clear-all--button');
-var filterUrgency = document.querySelector('.card-zone__task-card__footer--urgency-button');
 var cardArea = document.querySelector('.card-zone');
 var listArea = document.querySelector('.sidebar__form--list-items');
 var deleteListItemFromSidebar = document.querySelector('.sidebar__insert-list--delete-button');
@@ -107,7 +106,6 @@ function createTodoCard() {
 
 function repopulateDataAfterReload() {
   var oldTodoCardsArray = todoCardsArray;
-  // console.log(oldTodoCardsArray);
   var newInstances = oldTodoCardsArray.map(function(datum) {
     datum = new Card(datum.title, datum.taskList, datum.urgent, datum.id);
     return datum;
@@ -125,8 +123,8 @@ function restoreCards(todoCardsArray) {
 function appendCardToDOM(newTodoCard) {
   var card = `
   <div class="card-zone__task-card ${newTodoCard.urgent}" id="task-card" data-id="${newTodoCard.id}">
-    <h3 class="card-zone__task-card__title">${newTodoCard.title}</h3>
-    <div class="card-zone__task-card__items">
+    <h3 class="card-zone__task-card__title ${newTodoCard.urgent}">${newTodoCard.title}</h3>
+    <div class="card-zone__task-card__items ${newTodoCard.urgent}">
       <ul class="card-zone__populate">
       ${iterateThruTasks(newTodoCard)}
       </ul>
@@ -152,7 +150,7 @@ function iterateThruTasks(newTodoCard) {
   for (var i = 0; i < newTodoCard.taskList.length; i++){
     taskListIteration += `
       <li class="card-zone__populate--li">
-        <img class="card__task-delete" src="${newTodoCard.taskList[i].doneImg}" alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
+        <img class="card__task-delete" src=${newTodoCard.taskList[i].doneImg} alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
         <p id="check-off-${newTodoCard.taskList[i].done}">${newTodoCard.taskList[i].content}</p>
       </li>
       `
@@ -160,6 +158,7 @@ function iterateThruTasks(newTodoCard) {
 }
 
 function urgentAndDeleteBtns(e) {
+  console.log(e.target);
   if (e.target.className === 'card-zone__task-card__footer--urgency-button') {
     targetCardUrgent(e);
   }
@@ -198,6 +197,8 @@ function activateDeleteBtn(index) {
   });
   if (newArray.length === deleteObj.length) {
     deleteCardData(index);
+  } else {
+    alert('Please complete all tasks before deleting ToDo list! - You can do it!')
   }
 }
 
@@ -209,7 +210,6 @@ function deleteCardData(index) {
 
 function findCardIndex(card) {
   var cardId = card.dataset.id;
-  // console.log(cardId);
   return todoCardsArray.findIndex(function(item) {
     return item.id == cardId;
   });
@@ -217,7 +217,6 @@ function findCardIndex(card) {
 
 function targetListItem(e) {
   var taskId = e.target.dataset.id;
-  // console.log(task);
   var card = e.target.closest('.card-zone__task-card');
   var index = findCardIndex(card);
   var todoObject = todoCardsArray[index];
