@@ -8,6 +8,7 @@ var clearAll = document.querySelector('.sidebar__form__clear-all--button');
 var cardArea = document.querySelector('.card-zone');
 var listArea = document.querySelector('.sidebar__form--list-items');
 var deleteListItemFromSidebar = document.querySelector('.sidebar__insert-list--delete-button');
+var prompt = document.querySelector('.card-zone__taskPrompt');
 
 var taskItemsArray = [];
 var todoCardsArray = JSON.parse(localStorage.getItem("todos")) || [];
@@ -26,6 +27,15 @@ listArea.addEventListener('click', deleteSidebarListItem);
 
 function onLoad() {
   repopulateDataAfterReload();
+  promptToggle();
+}
+
+function promptToggle() {
+  if (todoCardsArray.length > 0) {
+    prompt.classList.add("hidden");
+  } else {
+    prompt.classList.remove("hidden");
+  }
 }
 
 function addListItemToSidebar(newListItem) {
@@ -86,10 +96,11 @@ function addItemsToArray() {
 
 function onSubmitBtnClick() {
   createTodoCard();
+  promptToggle();
 }
 
 function createTodoCard() {
-  if (taskTitleInput.value && listArea.innerHTML !== '') {
+  if (taskTitleInput.value && listArea.innerText !== '') {
     // console.log(taskItemsArray);
     var newTodoCard = new Card(taskTitleInput.value, taskItemsArray);
     // console.log(newTodoCard.taskList.length);
@@ -206,6 +217,7 @@ function deleteCardData(index) {
   todoCardsArray[index].deleteFromStorage(index);
   cardArea.innerHTML = '';
   repopulateDataAfterReload();
+  promptToggle();
 }
 
 function findCardIndex(card) {
