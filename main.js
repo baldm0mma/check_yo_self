@@ -164,7 +164,7 @@ function urgentAndDeleteBtns(e) {
     targetCardUrgent(e);
   }
   if (e.target.className === 'card-zone__task-card__footer--delete-button') {
-    targetCardDelete(e);
+    targetCardForDeletion(e);
   }
   if (e.target.className === 'card__task-delete') {
     targetListItem(e);
@@ -185,9 +185,23 @@ function makeCardDataUrgent(index) {
   repopulateDataAfterReload();
 }
 
-function targetCardDelete(e) {
+function targetCardForDeletion(e) {
   var card = e.target.closest('.card-zone__task-card');
   var index = findCardIndex(card);
+  activateDeleteBtn(index);
+}
+
+function activateDeleteBtn(index) {
+  var deleteObj = todoCardsArray[index].taskList;
+  var newArray = deleteObj.filter(function(el) {
+    return el.done === true;
+  });
+  if (newArray.length === deleteObj.length) {
+    deleteCardData(index);
+  }
+}
+
+function deleteCardData(index) {
   todoCardsArray[index].deleteFromStorage(index);
   cardArea.innerHTML = '';
   repopulateDataAfterReload();

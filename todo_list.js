@@ -24,9 +24,6 @@ class Card {
 
   updateTask(index) {
     this.taskList[index].done = !this.taskList[index].done;
-    this.taskList[index].done ? 
-      this.taskList[index].doneImg = 'images/checkbox-active.svg' : 
-      this.taskList[index].doneImg = 'images/checkbox.svg';
     this.saveToStorage();
   } 
 }
