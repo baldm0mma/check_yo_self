@@ -27,10 +27,7 @@ class Card {
     this.taskList[index].done ? 
       this.taskList[index].doneImg = 'images/checkbox-active.svg' : 
       this.taskList[index].doneImg = 'images/checkbox.svg';
-      
     this.saveToStorage();
-
-    this.taskList[index].done = !this.done;
   } 
 }
 
@@ -39,5 +36,7 @@ class Items {
     this.content = content;
     this.done = false;
     this.id = Date.now();
+    this.doneImg;
+    this.done ? this.doneImg = 'images/checkbox-active.svg' : this.doneImg = 'images/checkbox.svg';
   }
 }
