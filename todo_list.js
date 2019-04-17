@@ -15,11 +15,12 @@ class Card {
 
   deleteFromStorage(index) {
     todoCards.splice(index, 1);
-    this.saveToStorage();  
+    this.saveToStorage();
   }
 
   updateToDos() {
     this.urgent = !this.urgent;
+    this.saveToStorage();
   }
 
   updateTask(index) {
@@ -28,7 +29,7 @@ class Card {
       this.taskList[index].doneImg = 'images/checkbox-active.svg' : 
       this.taskList[index].doneImg = 'images/checkbox.svg';
     this.saveToStorage();
-  } 
+  }  
 }
 
 class Items {

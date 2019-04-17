@@ -87,7 +87,7 @@ header {
 
 .header__form__search--input {
   border-bottom-left-radius: 0px;
-  border-left: 0px;
+  border: 0;
   border-top-left-radius: 0px;
   font-size: 12px;
   margin-right: 10px;
@@ -99,7 +99,7 @@ header {
   border-bottom-left-radius: 3px;
   border-right: 0;
   border-top-left-radius: 3px;
-  border: 1px solid #1f1f3d;
+  /* border: 1px solid #1f1f3d; */
   cursor: pointer;
   height: 40px;
   padding: 5px;
