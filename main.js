@@ -12,6 +12,8 @@ var searchButton = document.querySelector('.header__form__search--button');
 var searchInput = document.querySelector('.header__form__search--input');
 var taskItemInput = document.querySelector('.sidebar__form__todo--item--input');
 var taskTitleInput = document.querySelector('.sidebar__form__todo--input');
+var cardTitle = document.getElementsByClassName('card-zone__task-card__title');
+var urgencyFilterButton = document.querySelector('.sidebar__form__urgency--button');
 
 // Global Arrays ------------------------------------------------------------------
 
@@ -26,6 +28,9 @@ clearAll.addEventListener('click', clearEverything);
 listArea.addEventListener('click', deleteSingleSidebarListItem);
 makeTaskListButton.addEventListener('click', onSubmitBtnClick);
 window.addEventListener('load', onLoad);
+searchButton.addEventListener('click', searchFunction);
+searchInput.addEventListener('keyup', clearSearch);
+urgencyFilterButton.addEventListener('click', verifyUrgentTasks);
 
 // On load functions ------------------------------------------------------------------
 
@@ -171,7 +176,6 @@ function targetCardUrgent(e) {
 function makeCardDataUrgent(index) {
   var cardToMakeUrgent = todoCards[index];
   cardToMakeUrgent.updateToDos();
-  cardToMakeUrgent.saveToStorage();
   cardArea.innerHTML = '';
   repopulateDataAfterReload();
 }
@@ -238,3 +242,56 @@ function clearInputFields() {
   taskItemInput.value = '';
   taskTitleInput.value = '';
 }
+
+// Search functions ------------------------------------------------------------------------
+
+function searchFunction() {
+  // debugger;
+  var searchQuery = searchInput.value.toUpperCase();
+  console.log(searchQuery)
+  for (i = 0; i < cardTitle.length; i++) {
+      if (cardTitle[i].textContent.toUpperCase().indexOf(searchQuery) < 0) {
+        cardTitle[i].parentNode.style.display = 'none';
+    }
+  }
+}
+function clearSearch() {
+  if(searchInput.value == '') {
+    cardArea.innerHTML = '';
+    repopulateDataAfterReload();
+  }
+}
+
+// Filter by urgent functions ---- Not functioning, but want to keep for later ---------------
+
+// function verifyUrgentTasks() {
+//   // debugger;
+//   var totalOfUrgents = 0;
+//   todoCards.map(function(item) {
+//     item.urgent === true ? totalOfUrgents++ : null;
+//   })
+//   runUrgencyFilterValue(totalOfUrgents)
+// }
+// function runUrgencyFilterValue(totalOfUrgents) {
+//   totalOfUrgents > 0 ? urgencyFilterValue() : null;
+// }
+
+// function urgencyFilterValue() {
+//   var dataUrgency = urgencyFilterButton.dataset;
+//   if (dataUrgency.value == "false") {
+//     dataUrgency.value = "true";
+//     urgencyFilter()
+//   } else {
+//     dataUrgency.value = "false";
+//     // cardArea.innerHTML = '';
+//     repopulateDataAfterReload();
+//   }
+// }
+// function urgencyFilter() {  
+//   var filteredArray = [];
+//   todoCards.map(function(item) {
+//     (item.urgent == true) ? filteredArray.push(item) : null;   
+//   })
+//   // cardArea.innerHTML = '';
+//   repopulateDataAfterReload();
+// }
