@@ -3,16 +3,15 @@
 
 var addTaskItemButton = document.querySelector('.sidebar__form__todo__item--button');
 var cardArea = document.querySelector('.card-zone');
+var cardTitle = document.getElementsByClassName('card-zone__task-card__title');
 var clearAll = document.querySelector('.sidebar__form__clear-all--button');
 var deleteListItemFromSidebar = document.querySelector('.sidebar__insert-list--delete-button');
 var listArea = document.querySelector('.sidebar__form--list-items');
 var makeTaskListButton = document.querySelector('.sidebar__form__make-task--button');
 var prompt = document.querySelector('.card-zone__taskPrompt');
-var searchButton = document.querySelector('.header__form__search--button');
 var searchInput = document.querySelector('.header__form__search--input');
 var taskItemInput = document.querySelector('.sidebar__form__todo--item--input');
 var taskTitleInput = document.querySelector('.sidebar__form__todo--input');
-var cardTitle = document.getElementsByClassName('card-zone__task-card__title');
 var urgencyFilterButton = document.querySelector('.sidebar__form__urgency--button');
 
 // Global Arrays ------------------------------------------------------------------
@@ -27,27 +26,40 @@ cardArea.addEventListener('click', targetCardButtons);
 clearAll.addEventListener('click', clearEverything);
 listArea.addEventListener('click', deleteSingleSidebarListItem);
 makeTaskListButton.addEventListener('click', onSubmitBtnClick);
+searchInput.addEventListener('keyup', searchFunction);
+taskItemInput.addEventListener('input', enableDisableButtons);
+taskTitleInput.addEventListener('input', enableDisableButtons);
+urgencyFilterButton.addEventListener('click', urgencyFilterValue);
 window.addEventListener('load', onLoad);
-searchButton.addEventListener('click', searchFunction);
-searchInput.addEventListener('keyup', clearSearch);
-urgencyFilterButton.addEventListener('click', verifyUrgentTasks);
+
 
 // On load functions ------------------------------------------------------------------
 
 function onLoad() {
   repopulateDataAfterReload();
   promptToggle();
+  enableDisableButtons();
 }
 
 function promptToggle() {
-  if (todoCards.length > 0) {
-    prompt.classList.add("hidden");
-  } else {
+  todoCards.length > 0 ? 
+    prompt.classList.add("hidden") : 
     prompt.classList.remove("hidden");
-  }
 }
 
 // Sidebar functions ------------------------------------------------------------------
+
+function enableDisableButtons() {
+  taskItemInput.value == '' ? 
+    addTaskItemButton.disabled = true : 
+    addTaskItemButton.disabled = false;
+  taskTitleInput.value == '' || listArea.innerHTML == '' ? 
+    makeTaskListButton.disabled = true : 
+    makeTaskListButton.disabled = false;
+  taskItemInput.value == '' && taskTitleInput.value == '' && listArea.innerText == '' ? 
+    clearAll.disabled = true : 
+    clearAll.disabled = false;
+}
 
 function addListItemToSidebar(newListItem) {
   var listText = `
@@ -71,13 +83,9 @@ function deleteAllSidebarListItems() {
 }
 
 function addItemsToArray() {
-  if (taskItemInput.value) {
-    var newListItem = new Items(taskItemInput.value);
-    taskItems.push(newListItem);
-    addListItemToSidebar(newListItem);
-  } else {
-    alert('Please enter a task first!')
-  }
+  var newListItem = new Items(taskItemInput.value);
+  taskItems.push(newListItem);
+  addListItemToSidebar(newListItem);
 }
 
 // On sidebar button click population functions ------------------------------------------------------
@@ -85,19 +93,16 @@ function addItemsToArray() {
 function onSubmitBtnClick() {
   createTodoCard();
   promptToggle();
+  enableDisableButtons();
 }
 
 function createTodoCard() {
-  if (taskTitleInput.value && listArea.innerText !== '') {
-    var newTodoCard = new Card(taskTitleInput.value, taskItems);
-    todoCards.push(newTodoCard);
-    newTodoCard.saveToStorage();
-    appendCardToDOM(newTodoCard);
-    deleteAllSidebarListItems();
-    clearInputFields();
-  } else {
-    alert('Please enter a Title and a few new Tasks for your ToDo list!');
-  }
+  var newTodoCard = new Card(taskTitleInput.value, taskItems);
+  todoCards.push(newTodoCard);
+  newTodoCard.saveToStorage();
+  appendCardToDOM(newTodoCard);
+  deleteAllSidebarListItems();
+  clearInputFields();
 }
 
 function appendCardToDOM(newTodoCard) {
@@ -236,6 +241,7 @@ function clearEverything(e) {
   deleteAllSidebarListItems();
   clearInputFields();
   taskItems = [];
+  enableDisableButtons();
 }
 
 function clearInputFields() {
@@ -246,15 +252,16 @@ function clearInputFields() {
 // Search functions ------------------------------------------------------------------------
 
 function searchFunction() {
-  // debugger;
-  var searchQuery = searchInput.value.toUpperCase();
+  var searchQuery = searchInput.value.toLowerCase();
   console.log(searchQuery)
   for (i = 0; i < cardTitle.length; i++) {
-      if (cardTitle[i].textContent.toUpperCase().indexOf(searchQuery) < 0) {
+      if (cardTitle[i].textContent.toLowerCase().indexOf(searchQuery) < 0) {
         cardTitle[i].parentNode.style.display = 'none';
     }
+    clearSearch();
   }
 }
+
 function clearSearch() {
   if(searchInput.value == '') {
     cardArea.innerHTML = '';
@@ -262,36 +269,27 @@ function clearSearch() {
   }
 }
 
-// Filter by urgent functions ---- Not functioning, but want to keep for later ---------------
+// Filter by urgent functions -----------------------------------------------------------------
 
-// function verifyUrgentTasks() {
-//   // debugger;
-//   var totalOfUrgents = 0;
-//   todoCards.map(function(item) {
-//     item.urgent === true ? totalOfUrgents++ : null;
-//   })
-//   runUrgencyFilterValue(totalOfUrgents)
-// }
-// function runUrgencyFilterValue(totalOfUrgents) {
-//   totalOfUrgents > 0 ? urgencyFilterValue() : null;
-// }
+function urgencyFilterValue() {
+  var dataUrgency = urgencyFilterButton.dataset;
+  if (dataUrgency.urgency == "false") {
+    dataUrgency.urgency = "true";
+    urgencyFilterButton.classList.add('true');
+    urgencyFilter();
+  } else {
+    dataUrgency.urgency = "false";
+    cardArea.innerHTML = '';
+    restoreCards(todoCards);
+    urgencyFilterButton.classList.remove('true');
+  }
+}
 
-// function urgencyFilterValue() {
-//   var dataUrgency = urgencyFilterButton.dataset;
-//   if (dataUrgency.value == "false") {
-//     dataUrgency.value = "true";
-//     urgencyFilter()
-//   } else {
-//     dataUrgency.value = "false";
-//     // cardArea.innerHTML = '';
-//     repopulateDataAfterReload();
-//   }
-// }
-// function urgencyFilter() {  
-//   var filteredArray = [];
-//   todoCards.map(function(item) {
-//     (item.urgent == true) ? filteredArray.push(item) : null;   
-//   })
-//   // cardArea.innerHTML = '';
-//   repopulateDataAfterReload();
-// }
+function urgencyFilter() {  
+  var filteredArray = [];
+  todoCards.map(function(item) {
+    (item.urgent == true) ? filteredArray.push(item) : null;   
+  });
+  cardArea.innerHTML = '';
+  restoreCards(filteredArray);
+}

@@ -45,6 +45,12 @@ label {
   margin-right: auto;
   margin-top: 10px;
   width: 90%;
+  outline-width: 0;
+}
+
+.global--button:disabled {
+  background-color: #364247;
+  cursor: default;
 }
 
 li {
@@ -214,9 +220,12 @@ main {
 
 .card-zone__taskPrompt {
   color: #1f1f3d;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 700;
+  margin-top: 40px;
   margin: 15px;
+  padding-top: 40px;
+  text-align: center;
 }
 
 /*----------Sidebar----------*/
@@ -248,6 +257,11 @@ main {
   margin-top: 25px;
 }
 
+.sidebar__form__urgency--button.true {
+  background-color: #ef4a23;
+  border-color: #782616;
+}
+
 .sidebar__form__todo--item--input {
   border-bottom-right-radius: 0px;
   border-right: 0px;
@@ -264,6 +278,9 @@ main {
 
 .sidebar__form__todo__item--button {
   background-color: #1f1f3d;
+  box-sizing: border-box;
+  padding: 3px;
+  background-image: url("images/plus.svg");
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
   border: 1px solid black;
@@ -272,6 +289,11 @@ main {
   height: 40px;
   position: absolute;
   width: 40px;
+}
+
+.sidebar__form__todo__item--button:disabled {
+  background-color: #364247;
+  cursor: default;
 }
 
 .sidebar__form__todo__item--button--1,
