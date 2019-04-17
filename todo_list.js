@@ -8,7 +8,7 @@ class Card {
     this.urgent ? this.urgentImg = 'images/urgent-active.svg' : this.urgentImg = 'images/urgent.svg';
   }
 
-  saveToStorage() {
+  saveToStorage() { 
     var stringifyData = JSON.stringify(todoCards);
     localStorage.setItem("todos", stringifyData);
   }
@@ -19,8 +19,8 @@ class Card {
   }
 
   updateToDos() {
-    this.urgent = !this.urgent;
-    this.saveToStorage();
+    this.urgent = !this.urgent; 
+    this.saveToStorage(); 
   }
 
   updateTask(index) {
@@ -28,7 +28,7 @@ class Card {
     this.taskList[index].done ? 
       this.taskList[index].doneImg = 'images/checkbox-active.svg' : 
       this.taskList[index].doneImg = 'images/checkbox.svg';
-    this.saveToStorage();
+    this.saveToStorage(); 
   }  
 }
 

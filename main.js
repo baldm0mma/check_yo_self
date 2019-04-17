@@ -42,9 +42,9 @@ function onLoad() {
 }
 
 function promptToggle() {
-  todoCards.length > 0 ? 
-    prompt.classList.add("hidden") : 
-    prompt.classList.remove("hidden");
+  todoCards.length < 1 ? 
+    prompt.classList.remove("hidden") : 
+    prompt.classList.add("hidden");
 }
 
 // Sidebar functions ------------------------------------------------------------------
@@ -170,6 +170,7 @@ function targetCardButtons(e) {
   if (e.target.className === 'card__task-delete') {
     targetListItem(e);
   }
+  promptToggle();
 }
 
 function targetCardUrgent(e) {
@@ -207,7 +208,6 @@ function deleteCardData(index) {
   todoCards[index].deleteFromStorage(index);
   cardArea.innerHTML = '';
   repopulateDataAfterReload();
-  promptToggle();
 }
 
 function findCardIndex(card) {
