@@ -35,7 +35,7 @@ label {
 .global--button {
   background-color: #1f1f3d;
   border-radius: 3px;
-  border: 1px solid #1f1f3d;
+  border: 2px solid #1f1f3d;
   color: #fff;
   cursor: pointer;
   font-size: 16px;
@@ -49,7 +49,7 @@ label {
 }
 
 .global--button:disabled {
-  background-color: #364247;
+  background-color: #656e72;
   cursor: default;
 }
 
@@ -278,41 +278,24 @@ main {
 
 .sidebar__form__todo__item--button {
   background-color: #1f1f3d;
-  box-sizing: border-box;
-  padding: 3px;
   background-image: url("images/plus.svg");
   border-bottom-right-radius: 3px;
   border-top-right-radius: 3px;
-  border: 1px solid black;
+  border: 2px solid #1f1f3d;
+  box-sizing: border-box;
   cursor: pointer;
   display: inline-block;
   height: 40px;
+  padding: 3px;
   position: absolute;
   width: 40px;
 }
 
 .sidebar__form__todo__item--button:disabled {
-  background-color: #364247;
+  background-color: #656e72;
   cursor: default;
 }
 
-.sidebar__form__todo__item--button--1,
-.sidebar__form__todo__item--button--2 {
-  background-color: #fff;
-  height: 1px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 25px;
-}
-
-.sidebar__form__todo__item--button--1 {
-  margin-top: 50%;
-}
-.sidebar__form__todo__item--button--2 {
-  display: absolute;
-  margin-top: -1px;
-  transform: rotate(90deg);
-}
 .sidebar__form--list-items {
   margin-left: auto;
   margin-right: auto;

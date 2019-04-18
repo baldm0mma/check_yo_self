@@ -86,6 +86,7 @@ function addItemsToArray() {
   var newListItem = new Items(taskItemInput.value);
   taskItems.push(newListItem);
   addListItemToSidebar(newListItem);
+  enableDisableButtons();
 }
 
 // On sidebar button click population functions ------------------------------------------------------
@@ -116,7 +117,7 @@ function appendCardToDOM(newTodoCard) {
     </div>
     <div class="card-zone__task-card__footer">
       <div class="card-zone__task-card__footer--left">
-        <img class="card-zone__task-card__footer--urgency-button" id="urgent-img-${newTodoCard.urgent}" src="${newTodoCard.urgentImg}">
+        <img class="card-zone__task-card__footer--urgency-button" id="urgent-img-${newTodoCard.urgent}" src="${newTodoCard.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'}">
         <p id="urgent-text-${newTodoCard.urgent}">URGENT</p>
       </div>
       <div class="card-zone__task-card__footer--right">
@@ -135,7 +136,7 @@ function appendTaskToCard(newTodoCard) {
   for (var i = 0; i < newTodoCard.taskList.length; i++){
     taskListIteration += `
       <li class="card-zone__populate--li">
-        <img class="card__task-delete" src=${newTodoCard.taskList[i].doneImg} alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
+        <img class="card__task-delete" src=${newTodoCard.taskList[i].done ? 'images/checkbox-active.svg' : 'images/checkbox.svg'} alt="Delete task from card" data-id=${newTodoCard.taskList[i].id} id="index ${i}"/>
         <p id="check-off-${newTodoCard.taskList[i].done}">${newTodoCard.taskList[i].content}</p>
       </li>
       `
@@ -273,12 +274,12 @@ function clearSearch() {
 
 function urgencyFilterValue() {
   var dataUrgency = urgencyFilterButton.dataset;
-  if (dataUrgency.urgency == "false") {
-    dataUrgency.urgency = "true";
+  if (dataUrgency.urgency == 'false') {
+    dataUrgency.urgency = true;
     urgencyFilterButton.classList.add('true');
     urgencyFilter();
   } else {
-    dataUrgency.urgency = "false";
+    dataUrgency.urgency = false;
     cardArea.innerHTML = '';
     restoreCards(todoCards);
     urgencyFilterButton.classList.remove('true');
