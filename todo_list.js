@@ -4,11 +4,9 @@ class Card {
     this.taskList = taskItems;
     this.urgent = urgent || false;
     this.id = id || Date.now();
-    this.urgentImg;
-    this.urgent ? this.urgentImg = 'images/urgent-active.svg' : this.urgentImg = 'images/urgent.svg';
   }
 
-  saveToStorage() {
+  saveToStorage() { 
     var stringifyData = JSON.stringify(todoCards);
     localStorage.setItem("todos", stringifyData);
   }
@@ -19,16 +17,13 @@ class Card {
   }
 
   updateToDos() {
-    this.urgent = !this.urgent;
+    this.urgent = !this.urgent; 
     this.saveToStorage();
   }
 
   updateTask(index) {
     this.taskList[index].done = !this.taskList[index].done;
-    this.taskList[index].done ? 
-      this.taskList[index].doneImg = 'images/checkbox-active.svg' : 
-      this.taskList[index].doneImg = 'images/checkbox.svg';
-    this.saveToStorage();
+    this.saveToStorage(); 
   }  
 }
 
@@ -38,6 +33,5 @@ class Items {
     this.done = false;
     this.id = Date.now();
     this.doneImg;
-    this.done ? this.doneImg = 'images/checkbox-active.svg' : this.doneImg = 'images/checkbox.svg';
   }
 }
